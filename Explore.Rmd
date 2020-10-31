@@ -13,15 +13,30 @@ jupyter:
 ---
 
 ```{python}
+# Import libraries required
 import pandas as pd
+import matplotlib.pyplot as plt
 ```
 
 ```{python}
+# Import data
 df = pd.read_csv("housing.csv")
 ```
 
 ```{python}
+# Initial view of data
 df.head()
+# RM is average number of rooms in local area
+# LSTAT is percentage of lower income homeowners
+# PTRatio ratio of students to teachers in local schools
+```
+
+## Visualisation
+
+```{python}
+
+df.plot(x ='RM', y='MEDV', kind = 'scatter')
+plt.show()
 ```
 
 ```{python}
