@@ -15,6 +15,7 @@ jupyter:
 ```{python}
 # Import libraries required
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 ```
 
@@ -34,9 +35,22 @@ df.head()
 ## Visualisation
 
 ```{python}
-
 df.plot(x ='RM', y='MEDV', kind = 'scatter')
 plt.show()
+```
+
+```{python}
+df.plot(x ='LSTAT', y='MEDV', kind = 'scatter')
+plt.show()
+```
+
+```{python}
+df.plot(x ='PTRATIO', y='MEDV', kind = 'scatter')
+plt.show()
+```
+
+```{python}
+df.cov()
 ```
 
 ```{python}
