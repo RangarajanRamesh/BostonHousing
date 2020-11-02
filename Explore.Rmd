@@ -12,21 +12,29 @@ jupyter:
     name: python3
 ---
 
+# Boston Housing Data
+
 ```{python}
 # Import libraries required
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import datasets, linear_model
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import (confusion_matrix, precision_recall_curve, auc,
+                             roc_curve, recall_score, classification_report, f1_score,
+                             precision_recall_fscore_support)
 ```
 
 ```{python}
-# Import data
+# Import data from CSV
 df = pd.read_csv("housing.csv")
 ```
 
 ```{python}
 # Initial view of data
 df.head()
+
 # RM is average number of rooms in local area
 # LSTAT is percentage of lower income homeowners
 # PTRatio ratio of students to teachers in local schools
@@ -51,6 +59,53 @@ plt.show()
 
 ```{python}
 df.cov()
+```
+
+# Splitting the data
+
+```{python}
+# output variable
+y = df['MEDV'];
+
+x = df.drop('MEDV',axis=1)
+```
+
+```{python}
+x.head
+```
+
+```{python}
+x_train, test_df, y_train, y_test = train_test_split(x, y, test_size = 0.2)
+```
+
+```{python}
+train_df, cv_df, y_train, y_cv = train_test_split(x_train, y_train, test_size=0.2)
+```
+
+# Fitting a model
+
+```{python}
+lm = linear_model.LinearRegression()
+model = lm.fit(train_df, y_train)
+predictions = lm.predict(test_df)
+```
+
+```{python}
+## Evaluate results
+```
+
+```{python}
+plt.scatter(y_test, predictions)
+plt.xlabel("True Values")
+plt.ylabel("Predictions")
+```
+
+```{python}
+
+```
+
+```{python}
+
 ```
 
 ```{python}
