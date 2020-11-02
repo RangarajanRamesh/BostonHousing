@@ -21,9 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets, linear_model
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import (confusion_matrix, precision_recall_curve, auc,
-                             roc_curve, recall_score, classification_report, f1_score,
-                             precision_recall_fscore_support)
+from sklearn.metrics import (r2_score, mean_squared_error)
 ```
 
 ```{python}
@@ -38,76 +36,72 @@ df.head()
 # RM is average number of rooms in local area
 # LSTAT is percentage of lower income homeowners
 # PTRatio ratio of students to teachers in local schools
+# MDEV (output) is the median house value in the local area
 ```
 
 ## Visualisation
 
 ```{python}
+# Plot showing relationship between # of rooms to median house value
 df.plot(x ='RM', y='MEDV', kind = 'scatter')
 plt.show()
 ```
 
 ```{python}
+# Plot showing relationship between % of lower income houseowners to median house value
 df.plot(x ='LSTAT', y='MEDV', kind = 'scatter')
 plt.show()
 ```
 
 ```{python}
+# Plot showing relationship between ratio of teachers to students to median house value
 df.plot(x ='PTRATIO', y='MEDV', kind = 'scatter')
 plt.show()
-```
-
-```{python}
-df.cov()
 ```
 
 # Splitting the data
 
 ```{python}
-# output variable
+# Output variable
 y = df['MEDV'];
 
+# Input variables
 x = df.drop('MEDV',axis=1)
 ```
 
 ```{python}
-x.head
-```
-
-```{python}
+# Splitting the data into train (80%) and test (20%) buckets
 x_train, test_df, y_train, y_test = train_test_split(x, y, test_size = 0.2)
 ```
 
 ```{python}
+# Splitting the train data into train (80%) and cross validation (20%) buckets - currently not using CV
 train_df, cv_df, y_train, y_cv = train_test_split(x_train, y_train, test_size=0.2)
 ```
 
 # Fitting a model
 
 ```{python}
+# Linear regression model - creating object instance
 lm = linear_model.LinearRegression()
-model = lm.fit(train_df, y_train)
+
+# Training model with training data
+lm.fit(train_df, y_train)
+
+# Generating predictions of test data
 predictions = lm.predict(test_df)
 ```
 
+# Evaluate results
+
 ```{python}
-## Evaluate results
+# Calculate R2 score - measure effectiveness of model
+r2_score(y_test, predictions)
 ```
 
 ```{python}
+# Plot showing true values vs. predictions - perfect model would give a straight line of gradient 1
 plt.scatter(y_test, predictions)
 plt.xlabel("True Values")
 plt.ylabel("Predictions")
-```
-
-```{python}
-
-```
-
-```{python}
-
-```
-
-```{python}
-
 ```
